@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login - ASTRO Games</title>
+    <link rel="stylesheet" href="istyle.css">
+    <style>
+        .auth-container {
+            max-width: 450px;
+            margin: 50px auto;
+            background-color: #1f1f1f;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            background-color: #151515;
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            color: #888;
+        }
+        
+        .auth-tab.active {
+            background-color: #1f1f1f;
+            color: #6200ea;
+            border-bottom: 3px solid #6200ea;
+        }
+        
+        .auth-form {
+            padding: 25px;
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .auth-form h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #fff;
+            font-size: 24px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccc;
+            font-weight: bold;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: #333;
+            color: #fff;
+            border: 2px solid #444;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s;
+            font-size: 16px;
+        }
+        
+        .form-group input:focus {
+            border-color: #6200ea;
+        }
+        
+        .form-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #6200ea;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .form-btn:hover {
+            background-color: #7c3aed;
+        }
+        
+        .alert {
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .alert-success {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+        }
+        
+        .alert-error {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+            border: 1px solid #f44336;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html">ASTRO Games</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="search.html">Search</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li> 
+            </ul> 
+        </nav> 
+   </header> 
+
+   <!-- Authentication Section --> 
+   <div class="auth-container">
+       <div class="auth-tabs">
+           <div class="auth-tab active" id="loginTab">SIGN IN</div>
+           <div class="auth-tab" id="registerTab">SIGN UP</div>
+       </div>
+       
+       <div class="alert alert-success" id="successAlert"></div>
+       <div class="alert alert-error" id="errorAlert"></div>
+       
+       <!-- Login Form -->
+       <div class="auth-form active" id="loginForm">
+           <h1>Welcome Back</h1>
+           <form id="loginFormEl">
+               <div class="form-group">
+                   <label for="username">Username</label>
+                   <input type="text" id="username" name="username" placeholder="Enter your username" required>
+               </div>
+               <div class="form-group">
+                   <label for="password">Password</label>
+                   <input type="password" id="password" name="password" placeholder="Enter your password" required>
+               </div>
+               <button type="submit" class="form-btn">SIGN IN</button>
+           </form>
+       </div>
+       
+       <!-- Register Form -->
+       <div class="auth-form" id="registerForm">
+           <h1>Create Account</h1>
+           <form id="registerFormEl">
+               <div class="form-group">
+                   <label for="reg-username">Username</label>
+                   <input type="text" id="reg-username" name="username" placeholder="Choose a username" required>
+               </div>
+               <div class="form-group">
+                   <label for="reg-password">Password</label>
+                   <input type="password" id="reg-password" name="password" placeholder="Create a password" required>
+               </div>
+               <div class="form-group">
+                   <label for="reg-confirm">Confirm Password</label>
+                   <input type="password" id="reg-confirm" name="confirm" placeholder="Confirm your password" required>
+               </div>
+               <button type="submit" class="form-btn">SIGN UP</button>
+           </form>
+       </div>
+   </div>
+
+   <!-- Footer Section -->  
+   <footer>  
+       <p>&copy; 2024 ASTRO Games. All rights reserved.</p>  
+   </footer>
+
+   <script>
+       document.addEventListener('DOMContentLoaded', function() {
+           // Tab switching functionality
+           const loginTab = document.getElementById('loginTab');
+           const registerTab = document.getElementById('registerTab');
+           const loginForm = document.getElementById('loginForm');
+           const registerForm = document.getElementById('registerForm');
+           const successAlert = document.getElementById('successAlert');
+           const errorAlert = document.getElementById('errorAlert');
+           
+           // Switch to login tab
+           loginTab.addEventListener('click', function() {
+               loginTab.classList.add('active');
+               registerTab.classList.remove('active');
+               loginForm.classList.add('active');
+               registerForm.classList.remove('active');
+               clearAlerts();
+           });
+           
+           // Switch to register tab
+           registerTab.addEventListener('click', function() {
+               registerTab.classList.add('active');
+               loginTab.classList.remove('active');
+               registerForm.classList.add('active');
+               loginForm.classList.remove('active');
+               clearAlerts();
+           });
+           
+           // Helper to clear alerts
+           function clearAlerts() {
+               successAlert.style.display = 'none';
+               errorAlert.style.display = 'none';
+           }
+           
+           // Show success message
+           function showSuccess(message) {
+               successAlert.textContent = message;
+               successAlert.style.display = 'block';
+               errorAlert.style.display = 'none';
+           }
+           
+           // Show error message
+           function showError(message) {
+               errorAlert.textContent = message;
+               errorAlert.style.display = 'block';
+               successAlert.style.display = 'none';
+           }
+           
+           // Check if user is already logged in
+           const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+           if (currentUser) {
+               showSuccess(`Welcome back, ${currentUser.username}! Redirecting to home...`);
+               setTimeout(() => {
+                   window.location.href = 'index.html';
+               }, 2000);
+           }
+
+           // Initialize users in localStorage if not exists
+           if (!localStorage.getItem('users')) {
+               localStorage.setItem('users', JSON.stringify([]));
+           }
+
+           // Login form handler
+           document.getElementById('loginFormEl').addEventListener('submit', function(e) {
+               e.preventDefault();
+               
+               const username = document.getElementById('username').value;
+               const password = document.getElementById('password').value;
+               
+               // Get users from localStorage
+               const users = JSON.parse(localStorage.getItem('users'));
+               const user = users.find(u => u.username === username && u.password === password);
+               
+               if (user) {
+                   // Save current user to localStorage
+                   localStorage.setItem('currentUser', JSON.stringify({ username: user.username }));
+                   
+                   showSuccess('Login successful! Redirecting to home...');
+                   setTimeout(() => {
+                       window.location.href = 'index.html';
+                   }, 1500);
+               } else {
+                   showError('Invalid username or password');
+               }
+           });
+           
+           // Register form handler
+           document.getElementById('registerFormEl').addEventListener('submit', function(e) {
+               e.preventDefault();
+               
+               const username = document.getElementById('reg-username').value;
+               const password = document.getElementById('reg-password').value;
+               const confirm = document.getElementById('reg-confirm').value;
+               
+               // Password confirmation check
+               if (password !== confirm) {
+                   showError('Passwords do not match');
+                   return;
+               }
+               
+               // Get users from localStorage
+               const users = JSON.parse(localStorage.getItem('users'));
+               
+               // Check if username already exists
+               if (users.some(u => u.username === username)) {
+                   showError('Username already exists');
+                   return;
+               }
+               
+               // Add new user
+               users.push({ username, password });
+               localStorage.setItem('users', JSON.stringify(users));
+               
+               showSuccess('Registration successful! You can now login.');
+               document.getElementById('registerFormEl').reset();
+               // Switch to login tab after successful registration
+               setTimeout(() => {
+                   loginTab.click();
+               }, 1500);
+           });
+       });
+   </script>
+</body>
+
+</html>
