@@ -89,6 +89,7 @@ header .logo a {
     background-repeat: no-repeat;
     min-height: 100vh;
     position: relative;
+    z-index: 1;
 }
 
 #home::before {
@@ -99,7 +100,7 @@ header .logo a {
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.7);
-    z-index: 1;
+    z-index: -1;
 }
 
 #home h1, #home p, #home h2, #home .featured-games, #home button {
