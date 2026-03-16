@@ -3,7 +3,11 @@
 A modern gaming marketplace website built with HTML, CSS, and JavaScript.
 
 ## Features
+## Live Demo
 
+- https://amoghwarang.github.io/play/
+
+## Features
 - User authentication (login/register)
 - Game marketplace with search and filtering
 - Shopping cart functionality
